@@ -84,7 +84,7 @@ def buscamosRelacionErrores(bitsFilasErroneas):
                 # significa que las columnas estan relacionadas
                 int(bit)
                 centinela = True
-            except:
+            except ValueError:
                 centinela = False
                 break
         if centinela:
@@ -108,9 +108,8 @@ def buscarColumnasRelacionadas(filas, filasErroneas):
                     bits += filas[j][i]
         bitsFilasErroneas.append(bits)
 
-    ''' Ahora que tenemos los bits que se forman con cada fila erronea,
-	tenemos que encontrar cuales columanas estan relacionadas.
-	'''
+        # Ahora que tenemos los bits que se forman con cada fila erronea,
+        # tenemos que encontrar cuales columanas estan relacionadas.
     columnasRelacionadas = buscamosRelacionErrores(bitsFilasErroneas)
     return columnasRelacionadas
 
@@ -145,10 +144,9 @@ def main():
         columnasRelacionadas = buscarColumnasRelacionadas(filas, filasErroneas)
         print("columnas relacionadas:\n", columnasRelacionadas)
 
-        ''' Ya que tenemos cuales columnas estan relaciondas, tenemos 
-		que cambiar los bits de esas columnas hasta que la suma de las 
-		filas sea PAR; lo hare a prueba y error.
-		'''
+        # Ya que tenemos cuales columnas estan relaciondas, tenemos
+        # que cambiar los bits de esas columnas hasta que la suma de las
+        # filas sea PAR; lo hare a prueba y error.
 
         for i in columnasRelacionadas:
             copyCadenaAuto = originalCadenaAuto

@@ -63,25 +63,25 @@ def crear_array(mensaje, cantidadpos):
     return lista
 
 
-def es_par(cadena_auto, salto):
+def es_par(lista, salto):
     """
     nos dira si es par o no
     """
-    cadena_temporal = ""
-    tamaino = len(cadena_auto)
-    cadena_auto = cadena_auto[salto-1:]
+    lista_temporal = []
+    tamaino = len(lista)
+    lista = lista[salto-1:]
 
     nsalto = salto * 2
 
-    while len(cadena_auto) > 0:
+    while len(lista) > 0:
         # con esto extraemos los bit necesarios
-        cadena_temporal += cadena_auto[:salto]
+        lista_temporal += lista[:salto]
         # con esto quitamos los bits extraidos mas su doble
-        cadena_auto = cadena_auto[nsalto:]
+        lista = lista[nsalto:]
 
-    cadena_temporal = cadena_temporal[:tamaino]
+    lista_temporal = lista_temporal[:tamaino]
 
-    suma = sum([1 for i in cadena_temporal if i == "1"])
+    suma = sum([1 for i in lista_temporal if i == "1"])
 
     return suma % 2 == 0
 
@@ -91,10 +91,9 @@ def solucionar_hamming(lista):
     quitamos los interrogantes y le ponemos los numero de paridad
     """
     tamaino = len(lista)
-    cadena = "".join(lista[:])
     for i in range(tamaino):
         if lista[i] == "?":
-            if es_par(cadena, i + 1):
+            if es_par(lista[:], i + 1):
                 lista[i] = "0"
             else:
                 lista[i] = "1"
