@@ -68,23 +68,18 @@ def es_par(cadena_auto, salto):
     nos dira si es par o no
     """
     cadena_temporal = ""
-    original_cadena_auto = cadena_auto
+    tamaino = len(cadena_auto)
     cadena_auto = cadena_auto[salto-1:]
 
-    nduplicado = "N"*(salto-1)
-    cadena_temporal += nduplicado
-
-    nduplicado = "N"*salto
     nsalto = salto * 2
 
     while len(cadena_auto) > 0:
+        # con esto extraemos los bit necesarios
         cadena_temporal += cadena_auto[:salto]
-
+        # con esto quitamos los bits extraidos mas su doble
         cadena_auto = cadena_auto[nsalto:]
 
-        cadena_temporal += nduplicado
-
-    cadena_temporal = cadena_temporal[:len(original_cadena_auto)]
+    cadena_temporal = cadena_temporal[:tamaino]
 
     suma = sum([1 for i in cadena_temporal if i == "1"])
 
@@ -105,10 +100,15 @@ def solucionar_hamming(lista):
                 lista[i] = "1"
 
 
-if __name__ == "__main__":
-    NUMERO = "1010101"       #pedir_numero()
-    CANTIDAD = paridad(NUMERO)
-    array = crear_array(NUMERO, CANTIDAD)
-    print("".join(array))
+def main():
+    numero = pedir_numero()
+    cantidad = paridad(numero)
+    array = crear_array(numero, cantidad)
+    # print("".join(array))
     solucionar_hamming(array)
+    print("El codigo hamming con los bits de paridad: ", end='')
     print("".join(array))
+
+
+if __name__ == "__main__":
+    main()

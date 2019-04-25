@@ -1,4 +1,4 @@
-salto = 1
+salto = 2
 cadena_auto = "??1?010?101"
 cadena_temporal = ""
 original_cadena_auto = cadena_auto
