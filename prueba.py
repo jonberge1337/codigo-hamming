@@ -7,13 +7,13 @@ def pedir_numero():
     """
     while True:
         valido = True
-        mensaje = input("Introduce el mensaje: ")
+        mensaje = input("Introduce 7 bits: ")
         for i in mensaje:
             try:
                 numero = int(i)
             except ValueError:
                 numero = 2
-            if numero not in (0, 1):
+            if numero not in (0, 1) and len(mensaje) == 7:
                 valido = False
                 break
         if valido:
@@ -88,7 +88,7 @@ def solucionar_hamming(lista):
 
 def main():
     numero = pedir_numero()
-    cantidad = paridad(numero)
+    cantidad = 4
     array = crear_array(numero, cantidad)
     # print("".join(array))
     solucionar_hamming(array)
