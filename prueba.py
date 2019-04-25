@@ -24,19 +24,6 @@ def pedir_numero():
     return mensaje
 
 
-def paridad(mensaje):
-    """
-    cuantos bits necesita de paridad
-    """
-    cantidad = 1
-    elevado = 1
-    while elevado < len(mensaje):
-        elevado *= 2
-        cantidad += 1
-
-    return cantidad
-
-
 def potencia(numero):
     """
     calcular si es potencia o no
