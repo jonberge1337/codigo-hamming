@@ -26,7 +26,11 @@ def pedir_numero():
 
 def potencia(numero):
     """
-    calcular si es potencia o no
+    calcular si es potencia de 2 o no
+    >>> potencia(8)
+    True
+    >>> potencia(7)
+    False
     """
     while numero > 1:
         numero /= 2
@@ -36,6 +40,8 @@ def potencia(numero):
 def crear_array(mensaje, cantidadpos):
     """
     crearemos un array pero sin importar los numero de paridad
+    >>> crear_array("1010101", 4)
+    ["?", "?", "1", "?", "0", "1", "0", "?", "1", "0", "1"]
     """
     total = len(mensaje) + cantidadpos
     lista = []
@@ -52,7 +58,13 @@ def crear_array(mensaje, cantidadpos):
 
 def es_par(lista, salto):
     """
-    nos dira si es par o no
+    nos dira si es par o no la posicion
+    dependiendo la cantidad del salto que le pasemos
+    >>> es_par(["?", "?", "1", "?", "0", "1", "0", "?", "1", "0", "1"], 1)
+    # lo convertiria en un array de 1 salto
+    # ["?", "1", "0", "0", "1", "1"]
+    # se suman todos los 1 y alfinal devuelve el booleno
+    False
     """
     lista_temporal = []
     tamaino = len(lista)
@@ -76,6 +88,7 @@ def es_par(lista, salto):
 def solucionar_hamming(lista):
     """
     quitamos los interrogantes y le ponemos los numero de paridad
+    llamamos a la funcion es_par para saber con que numero sustituir
     """
     tamaino = len(lista)
     for i in range(tamaino):
