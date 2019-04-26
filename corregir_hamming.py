@@ -7,7 +7,7 @@ def pedir_numero():
     """
     while True:
         valido = True
-        mensaje = input("Introduce el mensaje: ")
+        mensaje = input("Introduce 11 bits: ")
         for i in mensaje:
             try:
                 numero = int(i)
@@ -19,7 +19,7 @@ def pedir_numero():
         if valido:
             break
         else:
-            print("El mensaje que has introducido no es correcto")
+            print("Los bits no son correctos")
 
     return mensaje
 
@@ -80,20 +80,37 @@ def corregir(general):
     con esta funcion comprobamos si esta correcto
     en caso de que no lo este lo corregimos
     """
+    def es_impar(lista):
+        return sum([int(i) for i in lista if i.isdigit()]) % 2 != 0
+
+    def iguales(lista, pos, ant):
+        return lista.count("?") == len(ant) and (lista.count("1") == len(pos) or lista.count("1") == len(pos))
+
+    def gen_columna(lista, indice):
+        return lista[1][indice], lista[2][indice], lista[3][indice], lista[4][indice]
+
     filas = len(general)
     columnas = len(general[0])
+    impares = 0
+    posiciones = []
+    antiposi = []
+    for i in range(1, filas):
+        if es_impar(general[i]):
+            impares += 1
+            posiciones.append(i)
+        else:
+            antiposi.append(i)
 
     for i in range(columnas):
-        numero = int(general[0][i])
-        suma = 0
-        for j in range(filas):
-            if j != 0 and general[j][i] != "?" and int(general[j][i]) != numero:
-                suma += 1
-        if suma == 2:
-            if int(general[0][i]) == 0:
-                general[0][i] = "1"
-            else:
-                general[0][i] = "0"
+        columna = gen_columna(general, i)
+        if iguales(columna, posiciones, antiposi):
+            corrige = general[0][i]
+            posicion = i
+
+    if corrige == "1":
+        general[0][posicion] = "0"
+    else:
+        general[0][posicion] = "1"
 
 
 def main():

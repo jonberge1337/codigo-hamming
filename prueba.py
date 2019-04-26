@@ -19,7 +19,7 @@ def pedir_numero():
         if valido:
             break
         else:
-            print("El mensaje que has introducido no es correcto")
+            print("Los bits no son correctos")
 
     return mensaje
 
