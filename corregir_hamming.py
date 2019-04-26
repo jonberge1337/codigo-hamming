@@ -108,9 +108,11 @@ def corregir(general):
     for i in range(1, filas):
         if es_impar(general[i]):
             impares += 1
-            posiciones.append(i)
+            # le quitamos uno a i para que luego no se pase de rango
+            # en la tupla generada
+            posiciones.append(i-1)
         else:
-            antiposi.append(i)
+            antiposi.append(i-1)
 
     for i in range(columnas):
         columna = gen_columna(general, i)
