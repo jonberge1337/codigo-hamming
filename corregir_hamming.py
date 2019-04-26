@@ -84,7 +84,18 @@ def corregir(general):
         return sum([int(i) for i in lista if i.isdigit()]) % 2 != 0
 
     def iguales(lista, pos, ant):
-        return lista.count("?") == len(ant) and (lista.count("1") == len(pos) or lista.count("1") == len(pos))
+        # return lista.count("?") == len(ant) and (lista.count("1") == len(pos) or lista.count("1") == len(pos))
+        igual = True
+        for i in pos:
+            if lista[i] == "?":
+                igual = False
+                break
+
+        for i in ant:
+            if lista[i] != "?":
+                igual = False
+                break
+        return igual
 
     def gen_columna(lista, indice):
         return lista[1][indice], lista[2][indice], lista[3][indice], lista[4][indice]
@@ -104,13 +115,20 @@ def corregir(general):
     for i in range(columnas):
         columna = gen_columna(general, i)
         if iguales(columna, posiciones, antiposi):
-            corrige = general[0][i]
-            posicion = i
+            if general[0][i] == "1":
+                general[0][i] = "0"
+            else:
+                general[0][i] = "1"
 
-    if corrige == "1":
-        general[0][posicion] = "0"
-    else:
-        general[0][posicion] = "1"
+    # for i in range(columnas):
+    #     columna = []
+    #     for j in range(filas):
+    #         columna.append(general[j][i])
+    #         if iguales(columna, posiciones, antiposi):
+    #             if general[0][i] == "1":
+    #                 general[0][i] = "0"
+    #             else:
+    #                 general[0][i] = "1"
 
 
 def main():
