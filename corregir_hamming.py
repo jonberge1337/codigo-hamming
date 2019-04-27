@@ -26,7 +26,11 @@ def pedir_numero():
 
 def potencia(numero):
     """
-    calcular si es potencia o no
+    calcular si es potencia de 2 o no
+    >>> potencia(8)
+    True
+    >>> potencia(7)
+    False
     """
     while numero > 1:
         numero /= 2
@@ -35,13 +39,17 @@ def potencia(numero):
 
 def array_pos(lista, salto):
     """
-    creamos el array de cada posicion
+    creamos un array dependiendo del salto que tiene que hacer
+    >>> array_pos(["0", "0", "0", "0", "1", "1", "0", "0", "0", "0", "0"], 1)
+    ["0", "?", "0", "?", "1", "?", "0", "?", "0", "?", "0"]
     """
     tamaino = len(lista)
     lista_temporal = []
+
     # recortamos la cadena para que empiece en ese elemento
     lista = lista[salto-1:]
-    # agregamos una varible apoyo para conservar las "coordenadas"
+
+    # añadimos una variable apoyo para conservar todas las posiciones
     vacios = "?" * (salto-1)
     lista_temporal += vacios
 
@@ -50,12 +58,13 @@ def array_pos(lista, salto):
     while len(lista) > 0:
         # tomamos los elementos segun la paridad
         lista_temporal += lista[:salto]
-        # brincamos los elementos segun la paridad
-        lista = lista[nsalto:]
-        # agregamos una varible apoyo para conservar las coordenadas
         lista_temporal += vacios
 
-    # truncamos hasta el largo de la cadena con paridad
+        # quitamos la informacion copiada mas la vacia
+        lista = lista[nsalto:]
+
+    # recortamos la lista al tamaño de la lista original
+    # para no tener ? de sobra
     lista_temporal = lista_temporal[:tamaino]
 
     return lista_temporal
@@ -64,11 +73,19 @@ def array_pos(lista, salto):
 def array_general(lista):
     """
     creamos el array general para despues corregir
+    >>> array_general(["0", "0", "0", "0", "1", "1", "0", "0", "0", "0", "0"])
+    [
+        ["0", "0", "0", "0", "1", "1", "0", "0", "0", "0", "0"]
+        ["0", "?", "0", "?", "1", "?", "0", "?", "0", "?", "0"]
+        ["?", "0", "0", "?", "?", "1", "0", "?", "?", "0", "0"]
+        ["?", "?", "?", "0", "1", "1", "0", "?", "?", "?", "?"]
+        ["?", "?", "?", "?", "?", "?", "?", "0", "0", "0", "0"]
+    ]
     """
     general = []
     tamaino = len(lista)
     general.append(lista[:])
-    for i in range(tamaino):
+    for i in range(1, tamaino):
         if potencia(i):
             general.append(array_pos(lista, i))
 
@@ -84,7 +101,6 @@ def corregir(general):
         return sum([int(i) for i in lista if i.isdigit()]) % 2 != 0
 
     def iguales(lista, pos, ant):
-        # return lista.count("?") == len(ant) and (lista.count("1") == len(pos) or lista.count("1") == len(pos))
         igual = True
         for i in pos:
             if lista[i] == "?":
@@ -97,9 +113,6 @@ def corregir(general):
                 break
         return igual
 
-    def gen_columna(lista, indice):
-        return lista[1][indice], lista[2][indice], lista[3][indice], lista[4][indice]
-
     filas = len(general)
     columnas = len(general[0])
     impares = 0
@@ -109,28 +122,19 @@ def corregir(general):
         if es_impar(general[i]):
             impares += 1
             # le quitamos uno a i para que luego no se pase de rango
-            # en la tupla generada
+            # en la lista de columnas generada porque la general tendra
+            # 5 filas y las columnas que analizamos son 4
             posiciones.append(i-1)
         else:
             antiposi.append(i-1)
 
     for i in range(columnas):
-        columna = gen_columna(general, i)
+        columna = [general[j][i] for j in range(1, len(general))]
         if iguales(columna, posiciones, antiposi):
             if general[0][i] == "1":
                 general[0][i] = "0"
             else:
                 general[0][i] = "1"
-
-    # for i in range(columnas):
-    #     columna = []
-    #     for j in range(filas):
-    #         columna.append(general[j][i])
-    #         if iguales(columna, posiciones, antiposi):
-    #             if general[0][i] == "1":
-    #                 general[0][i] = "0"
-    #             else:
-    #                 general[0][i] = "1"
 
 
 def main():
