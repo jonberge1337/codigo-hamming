@@ -121,7 +121,7 @@ def corregir(general):
     for i in range(1, filas):
         if es_impar(general[i]):
             impares += 1
-            # le quitamos uno a i para que luego no se pase de rango
+            # le quitamos uno a i, para que luego no se pase de rango
             # en la lista de columnas generada porque la general tendra
             # 5 filas y las columnas que analizamos son 4
             posiciones.append(i-1)
